@@ -78,6 +78,9 @@ body {
   white-space: nowrap;
   transition: var(--transition-smooth);
   min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .planning-tab.active {
