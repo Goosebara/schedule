@@ -1,6 +1,13 @@
 // 行程資料 - 已移除過期活動（2025年6月26日之前）
 const planningData = [
   {
+  title: "打雷射",
+  startDate: "2025-07-08",
+  endDate: "2025-07-08",
+  time: "早上",
+  location: ""
+  },
+  {
     title: "晚上休診",
     startDate: "2025-07-08",
     endDate: "2025-07-08",
@@ -31,6 +38,13 @@ const planningData = [
     endDate: "2025-08-24",
     time: "09:00-17:00",
     location: "上午：謙和牙醫診所（台中市北區英才路394號）\n下午：金典酒店（台中市西區健行路1049號）"
+  },
+  {
+  title: "皮膚科回診",
+  startDate: "2025-08-26",
+  endDate: "2025-08-26",
+  time: "早上",
+  location: ""
   },
   {
     title: "中台灣經典植牙基礎班",
