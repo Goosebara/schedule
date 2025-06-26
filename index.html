@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>柯先生の預排行程</title>
-<script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,10 +15,19 @@
 </div>
 
 <div class="planning-tabs">
-  <button class="planning-tab" onclick="switchTab('list')">
+  <button class="planning-tab active" onclick="switchTab('list')">
     <span>📋</span>
     <span>列表視圖</span>
   </button>
+  <button class="planning-tab" onclick="switchTab('calendar')">
+    <span>📅</span>
+    <span>日曆視圖</span>
+  </button>
+</div>
+
+<!-- 列表視圖 -->
+<div id="listView" class="view-content active">
+  <!-- 由 JavaScript 動態生成 -->
 </div>
 
 <!-- 日曆視圖 -->
@@ -34,152 +42,6 @@
     </div>
     <div class="calendar-grid" id="calendarGrid">
       <!-- 由 JavaScript 動態生成 -->
-    </div>
-  </div>
-</div>
-
-<!-- 列表視圖 -->
-<div id="listView" class="view-content">
-  <div class="planning-card">
-    <h3 class="planning-month">2025年7月</h3>
-    <div class="planning-items">
-      <div class="planning-item">
-        <div class="planning-date">7月8日(二)</div>
-        <div class="planning-title">晚上休診</div>
-      </div>
-      <div class="planning-item">
-        <div class="planning-date">7月23日(三)</div>
-        <div class="planning-title">早上加診</div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="planning-card">
-    <h3 class="planning-month">2025年8月</h3>
-    <div class="planning-items">
-      <div class="planning-item">
-        <div class="planning-date">8月2日(六) - 8月4日(一)</div>
-        <div class="planning-title">美學加減法課程</div>
-        <div class="planning-location">
-          <span class="location-icon">📍</span>
-          <span class="location-text">台中微視野顯微教育中心（台中市烏日區高鐵五路156號12樓）</span>
-        </div>
-      </div>
-      <div class="planning-item">
-        <div class="planning-date">8月17日(日)</div>
-        <div class="planning-title">中台灣經典植牙基礎班</div>
-        <div class="planning-time">
-          <span class="time-icon">⏰</span>
-          <span class="time-text">09:00-17:00</span>
-        </div>
-        <div class="planning-location">
-          <span class="location-icon">📍</span>
-          <span class="location-text">仲信金鬱金香酒店（台中市北屯區后庄路306號）</span>
-        </div>
-      </div>
-      <div class="planning-item">
-        <div class="planning-date">8月24日(日)</div>
-        <div class="planning-title">中台灣經典植牙基礎班</div>
-        <div class="planning-time">
-          <span class="time-icon">⏰</span>
-          <span class="time-text">09:00-17:00</span>
-        </div>
-        <div class="planning-location">
-          <span class="location-icon">📍</span>
-          <span class="location-text">上午：謙和牙醫診所（台中市北區英才路394號）</span>
-          <br/>
-          <span class="location-icon">📍</span>
-          <span class="location-text">下午：金典酒店（台中市西區健行路1049號）</span>
-        </div>
-      </div>
-      <div class="planning-item">
-        <div class="planning-date">8月31日(日)</div>
-        <div class="planning-title">中台灣經典植牙基礎班</div>
-        <div class="planning-time">
-          <span class="time-icon">⏰</span>
-          <span class="time-text">09:00-17:00</span>
-        </div>
-        <div class="planning-location">
-          <span class="location-icon">📍</span>
-          <span class="location-text">仲信金鬱金香酒店（台中市北屯區后庄路306號）</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="planning-card">
-    <h3 class="planning-month">2025年9月</h3>
-    <div class="planning-items">
-      <div class="planning-item">
-        <div class="planning-date">9月7日(日)</div>
-        <div class="planning-title">中台灣經典植牙基礎班</div>
-        <div class="planning-time">
-          <span class="time-icon">⏰</span>
-          <span class="time-text">09:00-17:00</span>
-        </div>
-        <div class="planning-location">
-          <span class="location-icon">📍</span>
-          <span class="location-text">仲信金鬱金香酒店（台中市北屯區后庄路306號）</span>
-        </div>
-      </div>
-      <div class="planning-item">
-        <div class="planning-date">9月14日(日)</div>
-        <div class="planning-title">中台灣經典植牙基礎班</div>
-        <div class="planning-time">
-          <span class="time-icon">⏰</span>
-          <span class="time-text">09:00-17:00</span>
-        </div>
-        <div class="planning-location">
-          <span class="location-icon">📍</span>
-          <span class="location-text">仲信金鬱金香酒店（台中市北屯區后庄路306號）</span>
-        </div>
-      </div>
-      <div class="planning-item">
-        <div class="planning-date">9月21日(日)</div>
-        <div class="planning-title">中台灣經典植牙基礎班</div>
-        <div class="planning-time">
-          <span class="time-icon">⏰</span>
-          <span class="time-text">09:00-17:00</span>
-        </div>
-        <div class="planning-location">
-          <span class="location-icon">📍</span>
-          <span class="location-text">仲信金鬱金香酒店（台中市北屯區后庄路306號）</span>
-        </div>
-      </div>
-      <div class="planning-item">
-        <div class="planning-date">9月28日(日)</div>
-        <div class="planning-title">中台灣經典植牙基礎班</div>
-        <div class="planning-time">
-          <span class="time-icon">⏰</span>
-          <span class="time-text">09:00-17:00</span>
-        </div>
-        <div class="planning-location">
-          <span class="location-icon">📍</span>
-          <span class="location-text">仲信金鬱金香酒店（台中市北屯區后庄路306號）</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="planning-card">
-    <h3 class="planning-month">2025年10月</h3>
-    <div class="planning-items">
-      <div class="planning-item">
-        <div class="planning-date">10月18日(六) - 22日(三)</div>
-        <div class="planning-title">日本福岡九州遊</div>
-      </div>
-      <div class="planning-item">
-        <div class="planning-date">10月25日(六)</div>
-        <div class="planning-title">Beyond Vision 後牙重症小宇宙 PICU</div>
-        <div class="planning-time">
-          <span class="time-icon">⏰</span>
-          <span class="time-text">09:00-17:00</span>
-        </div>
-        <div class="planning-location">
-          <span class="location-icon">📍</span>
-          <span class="location-text">台中微視野顯微教育中心（台中市烏日區高鐵五路156號12樓）</span>
-        </div>
-      </div>
     </div>
   </div>
 </div>
