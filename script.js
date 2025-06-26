@@ -1,11 +1,11 @@
-// 行程資料 - 已移除過期活動（2025年6月26日之前）
+// 行程資料 - 統一在這裡管理
 const planningData = [
   {
-  title: "打雷射",
-  startDate: "2025-07-08",
-  endDate: "2025-07-08",
-  time: "早上",
-  location: ""
+    title: "打雷射",
+    startDate: "2025-07-08",
+    endDate: "2025-07-08",
+    time: "早上",
+    location: ""
   },
   {
     title: "晚上休診",
@@ -40,11 +40,11 @@ const planningData = [
     location: "上午：謙和牙醫診所（台中市北區英才路394號）\n下午：金典酒店（台中市西區健行路1049號）"
   },
   {
-  title: "皮膚科回診",
-  startDate: "2025-08-26",
-  endDate: "2025-08-26",
-  time: "早上",
-  location: ""
+    title: "皮膚科回診",
+    startDate: "2025-08-26",
+    endDate: "2025-08-26",
+    time: "早上",
+    location: ""
   },
   {
     title: "中台灣經典植牙基礎班",
@@ -98,6 +98,124 @@ const planningData = [
 
 // 當前日曆日期
 let currentCalendarDate = new Date();
+
+// 工具函數：格式化日期範圍顯示
+function formatDateRange(startDate, endDate) {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  
+  const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+  
+  if (startDate === endDate) {
+    // 單日活動
+    return `${start.getMonth() + 1}月${start.getDate()}日(${weekdays[start.getDay()]})`;
+  } else {
+    // 多日活動
+    if (start.getMonth() === end.getMonth()) {
+      // 同月
+      return `${start.getMonth() + 1}月${start.getDate()}日(${weekdays[start.getDay()]}) - ${end.getDate()}日(${weekdays[end.getDay()]})`;
+    } else {
+      // 跨月
+      return `${start.getMonth() + 1}月${start.getDate()}日(${weekdays[start.getDay()]}) - ${end.getMonth() + 1}月${end.getDate()}日(${weekdays[end.getDay()]})`;
+    }
+  }
+}
+
+// 工具函數：按月份分組行程資料
+function groupEventsByMonth() {
+  const grouped = {};
+  
+  planningData.forEach(event => {
+    const startDate = new Date(event.startDate);
+    const key = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, '0')}`;
+    
+    if (!grouped[key]) {
+      grouped[key] = [];
+    }
+    grouped[key].push(event);
+  });
+  
+  return grouped;
+}
+
+// 渲染列表視圖
+function renderListView() {
+  const listView = document.getElementById('listView');
+  const groupedEvents = groupEventsByMonth();
+  
+  listView.innerHTML = '';
+  
+  // 按年月排序
+  const sortedKeys = Object.keys(groupedEvents).sort();
+  
+  sortedKeys.forEach(monthKey => {
+    const [year, month] = monthKey.split('-');
+    const events = groupedEvents[monthKey];
+    
+    const planningCard = document.createElement('div');
+    planningCard.className = 'planning-card';
+    
+    const monthTitle = document.createElement('h3');
+    monthTitle.className = 'planning-month';
+    monthTitle.textContent = `${year}年${parseInt(month)}月`;
+    
+    const planningItems = document.createElement('div');
+    planningItems.className = 'planning-items';
+    
+    events.forEach(event => {
+      const planningItem = document.createElement('div');
+      planningItem.className = 'planning-item';
+      
+      // 檢查是否為過期或當天的活動
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const eventDate = new Date(event.startDate);
+      eventDate.setHours(0, 0, 0, 0);
+      
+      if (eventDate < today) {
+        planningItem.classList.add('past-event');
+      } else if (eventDate.getTime() === today.getTime()) {
+        planningItem.classList.add('current-event');
+      }
+      
+      let itemHTML = `
+        <div class="planning-date">${formatDateRange(event.startDate, event.endDate)}</div>
+        <div class="planning-title">${event.title}</div>
+      `;
+      
+      if (event.time) {
+        itemHTML += `
+          <div class="planning-time">
+            <span class="time-icon">⏰</span>
+            <span class="time-text">${event.time}</span>
+          </div>
+        `;
+      }
+      
+      if (event.location) {
+        // 處理多行地址
+        const locations = event.location.split('\n');
+        locations.forEach(location => {
+          if (location.trim()) {
+            itemHTML += `
+              <div class="planning-location">
+                <span class="location-icon">📍</span>
+                <span class="location-text">${location.trim()}</span>
+              </div>
+            `;
+          }
+        });
+      }
+      
+      planningItem.innerHTML = itemHTML;
+      planningItems.appendChild(planningItem);
+    });
+    
+    planningCard.appendChild(monthTitle);
+    planningCard.appendChild(planningItems);
+    listView.appendChild(planningCard);
+  });
+}
 
 // 切換視圖
 function switchTab(tabId) {
@@ -256,12 +374,18 @@ function showDayModal(year, month, day) {
       }
       
       if (event.location) {
-        eventHTML += `
-          <div class="event-location">
-            <span class="location-icon">📍</span>
-            <span class="location-text">${event.location.replace('\n', '<br>')}</span>
-          </div>
-        `;
+        // 處理多行地址
+        const locations = event.location.split('\n');
+        locations.forEach(location => {
+          if (location.trim()) {
+            eventHTML += `
+              <div class="event-location">
+                <span class="location-icon">📍</span>
+                <span class="location-text">${location.trim()}</span>
+              </div>
+            `;
+          }
+        });
       }
       
       eventItem.innerHTML = eventHTML;
@@ -284,17 +408,14 @@ function goBack() {
 }
 
 // 點擊彈出視窗背景關閉
-document.getElementById('calendarModal').addEventListener('click', function(e) {
-  if (e.target === this) {
-    closeModal();
-  }
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('calendarModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeModal();
+    }
+  });
+  
+  // 初始化
+  renderListView();
+  renderCalendar();
 });
-
-// 初始化
-let currentDate = new Date();
-document.getElementById('currentMonth').textContent = `${currentDate.getFullYear()}年${currentDate.getMonth() + 1}月`;
-renderCalendar();
-
-// 預設顯示列表視圖
-document.getElementById('listView').classList.add('active');
-document.querySelector('[onclick*="list"]').classList.add('active');
